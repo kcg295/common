@@ -67,16 +67,20 @@ def replace_ports(foundMessports, foundConnports):
   <Returns>
     None.
   """
-  for testfile in glob.glob("rs_*.py") + glob.glob("ut_*.py") + glob.glob("rn_*.py") + \
+  for testfile in glob.glob("rs_*.py") + glob.glob("rn_*.py") + \
       glob.glob("rz_*.py") + glob.glob("rb_*.py") + glob.glob("ru_*.py") + \
       glob.glob("re_*.py") + glob.glob("rl_*.py") +glob.glob("s_*.py") + \
       glob.glob("n_*.py") + glob.glob("z_*.py") + glob.glob("b_*.py") + \
       glob.glob("u_*.py") + glob.glob("e_*.py") + glob.glob("l_*.py") + \
-      glob.glob('restrictions.*') + glob.glob("ut_*.mix"):
+      glob.glob("ut_*.repy") + glob.glob("ut_*.r2py") + \
+      glob.glob('restrictions.*'):
     # read in the initial file
     inFile = file(testfile, 'r')
     filestring = inFile.read()
     inFile.close()
+
+    # MMM: We probably need a better way of doing this then just if
+    # statements if we want to expand this in the future.
     # Replace the instances of messport that we can replace
     if len(foundMessports) >= 1:
       filestring = filestring.replace('<messport>', foundMessports[0])
@@ -84,6 +88,10 @@ def replace_ports(foundMessports, foundConnports):
       filestring = filestring.replace('<messport1>', foundMessports[1])
     if len(foundMessports) >= 3:
       filestring = filestring.replace('<messport2>', foundMessports[2])
+    if len(foundMessports) >= 4:
+      filestring = filestring.replace('<messport3>', foundMessports[3])
+    if len(foundMessports) >= 5:
+      filestring = filestring.replace('<messport4>', foundMessports[4])
 
     # Replace the instances of connport that we can replace
     if len(foundConnports) >= 1:
@@ -92,6 +100,10 @@ def replace_ports(foundMessports, foundConnports):
       filestring = filestring.replace('<connport1>', foundConnports[1])
     if len(foundConnports) >= 3:
       filestring = filestring.replace('<connport2>', foundConnports[2])
+    if len(foundConnports) >= 4:
+      filestring = filestring.replace('<connport3>', foundConnports[3])
+    if len(foundConnports) >= 5:
+      filestring = filestring.replace('<connport4>', foundConnports[4])
 				
     # write out the file with our changes
     outFile = file(testfile, 'w')
