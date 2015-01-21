@@ -1,12 +1,17 @@
 """
 build_component.py --- build a component of the Seattle Testbed.
+
+NOTE: This script is not meant to be called individually, but through 
+  a wrapper script, build.py. See the Seattle build instructions wiki 
+  for details: https://seattle.poly.edu/wiki/BuildInstructions
+
 This script first erases all the files in a target directory, and then 
 copies the necessary files to build the particular component. 
 Afterwards, .mix files in the target directory are ran through the 
 preprocessor.
 
 The target directory that is passed to the script must exist. It is 
-emptied before files are copied over...
+emptied before files are copied over.
 
 This script assumes that you (or a component's scripts/initialize.py) have 
 checked out all the required repos of SeattleTestbed into the parent directory 
@@ -220,8 +225,10 @@ def help_exit(errMsg, parser):
 
 
 def main():
+  helpstring = """This script is not meant to be run individually.
+See https://seattle.poly.edu/wiki/BuildInstructions for details."""
+
   # Parse the options provided. 
-  helpstring = "python preparetest.py [-t] [-v] [-c] [-r] <target>"
   parser = optparse.OptionParser(usage=helpstring)
   
   parser.add_option("-t", "--testfiles", action="store_true",
@@ -281,14 +288,6 @@ def main():
       shutil.rmtree(entry)
     else:
       os.remove(entry)
-
-  # Create directories for each Repy version under the target
-  repy_dir = {"v1" : "repyV1",
-      "v2" : "repyV2" }
-
-  for dir_name in repy_dir.values():
-    if not os.path.exists(dir_name):
-      os.makedirs(dir_name)
 
 
   # Return to the grand-parent directory of the dependent repositories, 
