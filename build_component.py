@@ -27,7 +27,6 @@ NOTE WELL: The repositories are used as-is. No attempt is made to switch
     -t or --testfiles copies in all the files required to run the unit tests
     -v or --verbose displays significantly more output on failure to process 
           a mix file
-    -c or --checkapi copies the checkapi source files
     -r or --randomports replaces the default ports of 12345, 12346, and 12347
           with three random ports between 52000 and 53000. 
     
@@ -237,9 +236,6 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
   parser.add_option("-v", "--verbose", action="store_true",
       dest="verbose", default=False,
       help="Show more output on failure to process a .mix file")
-  parser.add_option("-c", "--checkapi", action="store_true", 
-      dest="copy_checkapi", default=False,
-      help="Include checkAPI files")
   parser.add_option("-r", "--randomports", action="store_true", 
       dest="randomports", default=False,
       help="Replace the default ports with random ports between 52000 and 53000. ")
@@ -271,7 +267,6 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
   repytest = options.include_tests
   RANDOMPORTS = options.randomports
   verbose = options.verbose
-  copy_checkapi = options.copy_checkapi
 
 
   # This script's parent directory is the root dir of all dependent 
