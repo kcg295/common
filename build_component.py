@@ -21,15 +21,16 @@ NOTE WELL: The repositories are used as-is. No attempt is made to switch
     to a specific branch, pull from remotes, etc.
     (In a future version of this script, the currently active branch 
     for each repo will be displayed as a visual reminder of this fact.)
-    
+
 <Usage>
-  build.py  [-t] [-v] [-c] [-r] <target_directory>
+  build_component.py  [-t] [-v] [-r] [TARGET_DIRECTORY]
     -t or --testfiles copies in all the files required to run the unit tests
     -v or --verbose displays significantly more output on failure to process 
           a mix file
     -r or --randomports replaces the default ports of 12345, 12346, and 12347
-          with three random ports between 52000 and 53000. 
-    
+          with three random ports between 52000 and 53000.
+    TARGET_DIRECTORY is optional; the default target dir is "RUNNABLE" 
+
   For details on the build process of Seattle components, 
   see https://seattle.poly.edu/wiki/BuildInstructions
 """
@@ -229,7 +230,7 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
 
   # Parse the options provided. 
   parser = optparse.OptionParser(usage=helpstring)
-  
+
   parser.add_option("-t", "--testfiles", action="store_true",
       dest="include_tests", default=False,
       help="Include files required to run the unit tests ")
@@ -274,7 +275,7 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
   repos_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
   # Set working directory to the target
-  os.chdir(target_dir)  
+  os.chdir(target_dir)
   files_to_remove = glob.glob("*")
 
   # Empty the destination
