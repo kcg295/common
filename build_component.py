@@ -360,15 +360,20 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
     replace_string("<nodemanager_port>", '1224', "*nm*")
     replace_string("<nodemanager_port>", '1224', "*securitylayers*")
 
-
-  os.chdir("repyV1")
-  process_mix("repypp.py", verbose)
-
-
-  # Change back to root project directory
-  os.chdir(repos_root_dir) 
+  # If we have a repyV1 dir, we need to preprocess files that use the 
+  # `include` functionality there.
+  try:
+    os.chdir("repyV1")
+    process_mix("repypp.py", verbose)
+    # Change back to root project directory
+    os.chdir(repos_root_dir)
+  except OSError:
+    # There was no repyV1 dir. Continue.
+    pass
 
   print "Done building!"
+
+
 
 if __name__ == '__main__':
   main()
