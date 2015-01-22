@@ -1,3 +1,0 @@
-#!/bin/bash
-cd "../dependencies/common/"
-python build.py $*

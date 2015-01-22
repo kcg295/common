@@ -1,5 +1,0 @@
-common/*
-common/utf/*
-repy_v2/*
-# Tests
-test ../tests/*
