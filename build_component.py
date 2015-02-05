@@ -295,8 +295,14 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
   os.chdir(os.path.join(repos_root_dir, ".."))
   # Copy the necessary files to the respective target folders, 
   # following the instructions in scripts/config_build.txt.
-  config_file = open("scripts/config_build.txt")
-  
+  try:
+    config_file = open("scripts/config_build.txt")
+  except IOError:
+    print "unable to open file scripts/config_build.txt ! This \
+    script is not meant to be called individually, but through \
+    a wrapper script, build.py. See the Seattle build instructions \
+    wiki for details: https://seattle.poly.edu/wiki/BuildInstructions"
+    return 0
   for line in config_file.readlines():
     # Ignore comments and blank lines
     if line.startswith("#") or line.strip() == '':
