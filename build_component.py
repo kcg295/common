@@ -258,10 +258,7 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
   try:
     config_file = open("scripts/config_build.txt")
   except IOError:
-    print "unable to open file scripts/config_build.txt ! This \
-    script is not meant to be called individually, but through \
-    a wrapper script, build.py. See the Seattle build instructions \
-    wiki for details: https://seattle.poly.edu/wiki/BuildInstructions"		
+    print "Unable to open file scripts/config_build.txt!"		
     raise
   
   # Determine the target directory.
