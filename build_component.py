@@ -298,7 +298,11 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
   try:
     config_file = open("scripts/config_build.txt")
   except IOError:
-    help_exit("unable to open file scripts/config_build.txt !",parser)
+    print "unable to open file scripts/config_build.txt ! This \
+    script is not meant to be called individually, but through \
+    a wrapper script, build.py. See the Seattle build instructions \
+    wiki for details: https://seattle.poly.edu/wiki/BuildInstructions"		
+    raise
   for line in config_file.readlines():
     # Ignore comments and blank lines
     if line.startswith("#") or line.strip() == '':
