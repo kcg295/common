@@ -223,7 +223,6 @@ def help_exit(errMsg, parser):
   sys.exit(1)
 
 
-
 def main():
   helpstring = """This script is not meant to be run individually.
 See https://seattle.poly.edu/wiki/BuildInstructions for details."""
@@ -242,7 +241,29 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
       help="Replace the default ports with random ports between 52000 and 53000. ")
 
   (options, args) = parser.parse_args()
+  
+  # This script's parent directory is the root dir of all dependent 
+  # repositories, path/to/component/DEPENDENCIES/ 
+  repos_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+  # Return to the grand-parent directory of the dependent repositories, 
+  # i.e. "/path/to/component/DEPENDENCIES/.."
+  # We now have
+  #   "." with the sources of the component we want to build,
+  #   "scripts/" with the build config file, and
+  #   "DEPENDENCIES/" with all the dependent repos.
+  os.chdir(os.path.join(repos_root_dir, ".."))
+  # Copy the necessary files to the respective target folders, 
+  # following the instructions in scripts/config_build.txt.
+  try:
+    config_file = open("scripts/config_build.txt")
+  except IOError:
+    print "unable to open file scripts/config_build.txt ! This \
+    script is not meant to be called individually, but through \
+    a wrapper script, build.py. See the Seattle build instructions \
+    wiki for details: https://seattle.poly.edu/wiki/BuildInstructions"		
+    raise
+  
   # Determine the target directory.
   # Use path/to/component/DEPENDENCIES/common/../../RUNNABLE 
   # unless overridden by the user.
@@ -269,11 +290,6 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
   RANDOMPORTS = options.randomports
   verbose = options.verbose
 
-
-  # This script's parent directory is the root dir of all dependent 
-  # repositories, path/to/component/DEPENDENCIES/ 
-  repos_root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
   # Set working directory to the target
   os.chdir(target_dir)
   files_to_remove = glob.glob("*")
@@ -285,24 +301,6 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
     else:
       os.remove(entry)
 
-
-  # Return to the grand-parent directory of the dependent repositories, 
-  # i.e. "/path/to/component/DEPENDENCIES/.."
-  # We now have
-  #   "." with the sources of the component we want to build,
-  #   "scripts/" with the build config file, and
-  #   "DEPENDENCIES/" with all the dependent repos.
-  os.chdir(os.path.join(repos_root_dir, ".."))
-  # Copy the necessary files to the respective target folders, 
-  # following the instructions in scripts/config_build.txt.
-  try:
-    config_file = open("scripts/config_build.txt")
-  except IOError:
-    print "unable to open file scripts/config_build.txt ! This \
-    script is not meant to be called individually, but through \
-    a wrapper script, build.py. See the Seattle build instructions \
-    wiki for details: https://seattle.poly.edu/wiki/BuildInstructions"		
-    raise
   for line in config_file.readlines():
     # Ignore comments and blank lines
     if line.startswith("#") or line.strip() == '':
