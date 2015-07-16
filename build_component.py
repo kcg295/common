@@ -67,7 +67,7 @@ def copy_to_target(file_expr, target):
 
   for file_path in files_to_copy:
     if os.path.isfile(file_path):
-      shutil.copyfile(file_path, target + os.path.sep +os.path.basename(file_path))
+      shutil.copy(file_path, target + os.path.sep +os.path.basename(file_path))
 
 
 
@@ -101,7 +101,7 @@ def copy_tree_to_target(source, target, ignore=None):
 
     for name in filenames:
       relative_path = os.path.join(relative_folder_path, name)
-      shutil.copyfile(
+      shutil.copy(
         os.path.join(full_source_path, relative_path),
         os.path.join(full_target_path, relative_path))
 
