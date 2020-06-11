@@ -63,7 +63,7 @@ def copy_to_target(file_expr, target):
   """
   files_to_copy = glob.glob(file_expr)
   if files_to_copy == []:
-    print "WARNING: File expression '" + file_expr + "' does not match any files. Maybe the directory is empty, or the file / directory doesn't exist?"
+    print("WARNING: File expression '" + file_expr + "' does not match any files. Maybe the directory is empty, or the file / directory doesn't exist?")
 
   for file_path in files_to_copy:
     if os.path.isfile(file_path):
@@ -123,16 +123,16 @@ def process_mix(script_path, verbose):
 
     # If there was any problem processing the files, then notify the user.
     if theerr:
-      print "Unable to process the file: " + file_path
+      print("Unable to process the file: " + file_path)
       error_list.append((file_path, theerr))
       
   # If the verbose option is on then print the error.  
   if verbose and len(error_list) > 0:
-    print "\n" + '#'*50 + "\nPrinting all the exceptions (verbose option)\n" + '#'*50
+    print("\n" + '#'*50 + "\nPrinting all the exceptions (verbose option)\n" + '#'*50)
     for file_name, error in error_list:
-      print "\n" + file_name + ":"
-      print error
-      print '-'*80
+      print("\n" + file_name + ":")
+      print(error)
+      print('-'*80)
 
 
 
@@ -218,7 +218,7 @@ def help_exit(errMsg, parser):
   """
    Prints the given error message and the help string, then exits
   """
-  print errMsg
+  print(errMsg)
   parser.print_help()
   sys.exit(1)
 
@@ -262,7 +262,7 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
           "' doesn't exist or is not a directory", parser)
 
   # Print let the world know we run
-  print "Building into", target_dir
+  print("Building into", target_dir)
 
   # Set variables according to the provided options.
   repytest = options.include_tests
@@ -337,19 +337,19 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
 
   # Set up dynamic port information
   if RANDOMPORTS:
-    print "\n[ Randomports option was chosen ]\n"+'-'*50
+    print("\n[ Randomports option was chosen ]\n"+'-'*50)
     ports_as_ints = random.sample(range(52000, 53000), 5)
     ports_as_strings = []
     for port in ports_as_ints:
       ports_as_strings.append(str(port))
     
-    print "Randomly chosen ports: ", ports_as_strings
+    print("Randomly chosen ports: ", ports_as_strings)
     testportfiller.replace_ports(ports_as_strings, ports_as_strings)
 
     # Replace the string <nodemanager_port> with a random port
     random_nodemanager_port = random.randint(53000, 54000)
-    print "Chosen random nodemanager port: " + str(random_nodemanager_port)
-    print '-'*50 + "\n"
+    print("Chosen random nodemanager port: " + str(random_nodemanager_port))
+    print('-'*50 + "\n")
     replace_string("<nodemanager_port>", str(random_nodemanager_port), "*nm*")
     replace_string("<nodemanager_port>", str(random_nodemanager_port), "*securitylayers*")
 
@@ -372,7 +372,7 @@ See https://seattle.poly.edu/wiki/BuildInstructions for details."""
     # There was no repyV1 dir. Continue.
     pass
 
-  print "Done building!"
+  print("Done building!")
 
 
 
