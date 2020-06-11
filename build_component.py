@@ -199,7 +199,7 @@ def replace_string(old_string, new_string, file_name_pattern="*"):
 
   for testfile in glob.glob(file_name_pattern):
     # Read in the initial file.
-    inFile = file(testfile, 'r')
+    inFile = open(testfile, 'r')
     filestring = inFile.read()
     inFile.close()
 
@@ -208,7 +208,7 @@ def replace_string(old_string, new_string, file_name_pattern="*"):
     filestring = filestring.replace(old_string, new_string)
 
     # Write the file back.
-    outFile = file(testfile, 'w')
+    outFile = open(testfile, 'w')
     outFile.write(filestring)
     outFile.close()
 
