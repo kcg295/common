@@ -75,7 +75,7 @@ def replace_ports(foundMessports, foundConnports):
       glob.glob("ut_*.repy") + glob.glob("ut_*.r2py") + \
       glob.glob('restrictions.*'):
     # read in the initial file
-    inFile = file(testfile, 'r')
+    inFile = open(testfile, 'r')
     filestring = inFile.read()
     inFile.close()
 
@@ -106,7 +106,7 @@ def replace_ports(foundMessports, foundConnports):
       filestring = filestring.replace('<connport4>', foundConnports[4])
 				
     # write out the file with our changes
-    outFile = file(testfile, 'w')
+    outFile = open(testfile, 'w')
     outFile.write(filestring)
     outFile.close()
       
